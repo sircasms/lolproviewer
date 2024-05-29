@@ -57,3 +57,5 @@ for t in tournament_wrapper[0] + tournament_wrapper[1]:
         get_tournament = t
 
 print(get_tournament.get_name())
+
+# change test
