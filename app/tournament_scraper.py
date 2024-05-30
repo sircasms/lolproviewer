@@ -32,17 +32,23 @@ class Player:
 
 
 class Team: 
-    def __init__(self, name: str, name_abv: str) -> None:
+    def __init__(self, name: str, link: str) -> None:
         self.name = name
-        self.name_abv = name_abv
+        self.link = link
         self.players = []
+
+    def __str__(self) -> str:
+        return f"{self.name}\n{self.link}\n"
 
     def get_name(self) -> str:
         return self.name
     
-    def get_name_abv(self) -> str:
-        return self.name_abv
+    def get_link(self) -> str:
+        return self.link
     
+    def get_players(self) -> list[Player]:
+        return self.players
+
     def get_player(self, role: int) -> Player:
         return self.players[role]
 
@@ -83,7 +89,6 @@ else:
     print(f"Failed to retrieve the page. Status code: {response.status_code}")
     exit
 
-
 soup = BeautifulSoup(html_content, 'html.parser')
 
 reg_t = soup.find_all('div', class_='divCell Tournament Header')
@@ -115,3 +120,34 @@ for t in tournament_wrapper[0] + tournament_wrapper[1]:
         get_tournament = t
 
 print(get_tournament)
+
+
+# SEARCH FOR TEAMS WITHIN TOURNAMENT
+
+TEAMS = []
+
+if get_tournament.get_link() == "":
+    print("Tournament link does not exist.")
+    exit
+
+response = requests.get(get_tournament.get_link())
+
+# Check if the request was successful
+if response.status_code == 200:
+    html_content = response.content
+
+else:
+    print(f"Failed to retrieve the page. Status code: {response.status_code}")
+    exit
+
+soup = BeautifulSoup(html_content, 'html.parser')
+
+team_containers = soup.find_all('div', class_='teamcard toggle-area toggle-area-1')
+
+for c in team_containers:
+    a = c.find_all('a')[0]
+    if a and 'href' in a.attrs:
+        TEAMS.append(Team(a.text, urljoin(MAIN_URL, a['href'])))
+
+for team in TEAMS:
+    print(team)
