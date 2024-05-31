@@ -6,10 +6,12 @@
 </head>
 <body>
     <h1>{{ tournament.get_name() }}</h1>
+    <p>Link: <a href="{{ tournament.get_link() }}" target="_blank">{{ tournament.get_link() }}</a></p>
+
     <h2>Teams</h2>
     <ul>
         {% for team in teams %}
-            <li>{{ team }}</li>
+            <li>{{ team.get_name() }} - <a href="{{ team.get_link() }}" target="_blank">Link</a></li>
         {% endfor %}
     </ul>
     <a href="/">Back to tournaments</a>

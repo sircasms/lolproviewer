@@ -8,14 +8,14 @@
     <h1>International Tournaments</h1>
     <ul>
         {% for tournament in international_tournaments %}
-            <li>{{ tournament }}</li>
+            <li><a href="{{ tournament.get_link() }}" target="_blank">{{ tournament.get_name() }}</a></li>
         {% endfor %}
     </ul>
 
     <h1>Regional Tournaments</h1>
     <ul>
         {% for tournament in regional_tournaments %}
-            <li>{{ tournament }}</li>
+            <li><a href="{{ tournament.get_link() }}" target="_blank">{{ tournament.get_name() }}</a></li>
         {% endfor %}
     </ul>
 

@@ -56,7 +56,7 @@ class Tournament:
         self.link = link
 
     def __str__(self) -> str:
-        return f"\nTournament Name: {self.name}\nLink: {self.link}\n"
+        return f'{self.name} <a href="{self.link}">Link</a>'
 
     def get_name(self) -> str:
         return self.name
@@ -77,7 +77,7 @@ class Scraper:
         self.regional_tournaments = []
         self.tournament_wrapper = [self.international_tournaments, self.regional_tournaments]
 
-    def fetch_page(self, url: str) -> BeautifulSoup:
+    def fetch_page(self, url: str):
         response = requests.get(url)
         if response.status_code == 200:
             html_content = response.content
@@ -88,6 +88,9 @@ class Scraper:
             return None
 
     def scrape_tournaments(self, url: str):
+        self.international_tournaments.clear()
+        self.regional_tournaments.clear()
+        
         soup = self.fetch_page(url)
         if not soup:
             return
@@ -130,17 +133,3 @@ class Scraper:
                 teams.append(Team(a.text, urljoin(MAIN_URL, a['href'])))
         return teams
 
-
-if __name__ == "__main__":
-    scraper = Scraper()
-    
-    scraper.scrape_tournaments('https://liquipedia.net/leagueoflegends/S-Tier_Tournaments')
-
-    tournament_name = input("Pick a tournament: ")
-    selected_tournament = scraper.select_tournament(tournament_name)
-
-    print(selected_tournament)
-
-    teams = scraper.scrape_teams(selected_tournament)
-    for team in teams:
-        print(team)
