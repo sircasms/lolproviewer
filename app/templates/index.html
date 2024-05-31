@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tournaments</title>
+</head>
+<body>
+    <h1>International Tournaments</h1>
+    <ul>
+        {% for tournament in international_tournaments %}
+            <li>{{ tournament }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Regional Tournaments</h1>
+    <ul>
+        {% for tournament in regional_tournaments %}
+            <li>{{ tournament }}</li>
+        {% endfor %}
+    </ul>
+
+    <form action="/tournament" method="post">
+        <label for="tournament">Select a tournament:</label>
+        <input type="text" id="tournament" name="tournament">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tournament.get_name() }}</title>
+</head>
+<body>
+    <h1>{{ tournament.get_name() }}</h1>
+    <h2>Teams</h2>
+    <ul>
+        {% for team in teams %}
+            <li>{{ team }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/">Back to tournaments</a>
+</body>
+</html>
